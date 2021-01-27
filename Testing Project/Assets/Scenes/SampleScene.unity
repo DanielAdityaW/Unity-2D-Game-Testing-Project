@@ -133,6 +133,7 @@ GameObject:
   - component: {fileID: 446413607}
   - component: {fileID: 446413606}
   - component: {fileID: 446413605}
+  - component: {fileID: 446413611}
   - component: {fileID: 446413604}
   - component: {fileID: 446413609}
   - component: {fileID: 446413610}
@@ -177,7 +178,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.012678362, y: 0.21067047}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -188,7 +189,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.53, y: 0.9000261}
+  m_Size: {x: 0.3525017, y: 0.47868514}
   m_EdgeRadius: 0
 --- !u!95 &446413606
 Animator:
@@ -287,10 +288,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8e875d29b7acad4583dc9aeb6a4b228, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_JumpForce: 800
+  m_JumpForce: 700
   m_CrouchSpeed: 0.36
   m_MovementSmoothing: 0.05
-  m_AirControl: 0
+  m_AirControl: 1
   m_WhatIsGround:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -317,6 +318,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   kontrol: {fileID: 446413609}
   kecepatanGerak: 40
+--- !u!58 &446413611
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 446413603}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 6200000, guid: 6dd98d9a1a48bca40b44f3905ca814b3, type: 2}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.012678501, y: -0.23810175}
+  serializedVersion: 2
+  m_Radius: 0.22511855
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
