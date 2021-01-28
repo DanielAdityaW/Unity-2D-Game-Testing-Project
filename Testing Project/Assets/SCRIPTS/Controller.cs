@@ -6,7 +6,7 @@ public class Controller : MonoBehaviour
 {
     public CharacterController2D kontrol;
     private float gerakHorizontal = 0f;
-    public float kecepatanGerak = 0f;
+    public float kecepatanGerak;
     private bool lompat = false;
     // Start is called before the first frame update
     void Start()
@@ -18,6 +18,11 @@ public class Controller : MonoBehaviour
     void Update()
     {
         gerakHorizontal = Input.GetAxisRaw("Horizontal") * kecepatanGerak;
+        if (Input.GetKey(KeyCode.LeftShift)){
+            kecepatanGerak = 75f;
+        } else {
+            kecepatanGerak = 30f;
+        }
         if (Input.GetButtonDown("Jump")){
             lompat = true;
         } 
