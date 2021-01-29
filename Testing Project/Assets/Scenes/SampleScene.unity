@@ -297,6 +297,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   nilaiLompat: 1
+  waktuLompatan: 0.5
 --- !u!58 &446413611
 CircleCollider2D:
   m_ObjectHideFlags: 0

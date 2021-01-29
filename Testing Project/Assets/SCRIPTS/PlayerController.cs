@@ -11,11 +11,15 @@ public class PlayerController : MonoBehaviour
 
     private bool facingRight = true;
     private bool isGround;
+    private bool isJump;
     public Transform groundCheck;
     public LayerMask whatIsGround;
 
     private int lompat, arahDorong;
     public int nilaiLompat;
+
+    private float penghitungWaktuLompat;
+    public float waktuLompatan;
 
     private void Start()
     {
@@ -27,9 +31,6 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         moveInput = Input.GetAxisRaw("Horizontal");
-        {
-            Debug.Log(Input.GetAxisRaw("Horizontal"));
-        }
         rb2d.velocity = new Vector2 (moveInput * kecepatan, rb2d.velocity.y);
 
         if(isGround == true){
@@ -38,9 +39,22 @@ public class PlayerController : MonoBehaviour
 
         if(Input.GetKeyDown(KeyCode.Space) && lompat > 0){
             rb2d.velocity = Vector2.up * gayaLompat;
-            lompat--;
+            lompat = lompat - 1;
+            isJump = true;
+            penghitungWaktuLompat = waktuLompatan;
         }else if (Input.GetKeyDown(KeyCode.Space) && lompat == 0 && isGround == true){
             rb2d.velocity = Vector2.up * gayaLompat;
+        }
+
+        if(Input.GetKey(KeyCode.Space) && isJump == true){
+            if(penghitungWaktuLompat > 0){
+                rb2d.velocity = Vector2.up * gayaLompat;
+                penghitungWaktuLompat -= Time.deltaTime;
+            } else {
+                isJump = false;
+            }
+        } else if (Input.GetKeyUp(KeyCode.Space)){
+            isJump = false;
         }
 
         if (arahDorong == 0){
@@ -73,7 +87,7 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
         isGround = Physics2D.OverlapCircle(groundCheck.position, checkRadius, whatIsGround);
-
+        
         if (facingRight == false && moveInput > 0){
             Flip();
         } else if (facingRight == true && moveInput < 0){
