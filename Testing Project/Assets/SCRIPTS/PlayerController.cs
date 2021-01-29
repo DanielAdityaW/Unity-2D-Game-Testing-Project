@@ -10,10 +10,12 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D rb2d;
 
     private bool facingRight = true;
-    private bool isGround;
+    private bool isGround, isTouch;
+    private bool wallSlide,wallJumping;
+    public float  wallSlidingSpeed,x_wallJump,y_wallJump,wallJumpTime;
     private bool isJump;
-    public Transform groundCheck;
-    public LayerMask whatIsGround;
+    public Transform groundCheck,frontCheck;
+    public LayerMask whatIsGround,whatIsWall;
 
     private int lompat, arahDorong;
     public int nilaiLompat;
@@ -81,12 +83,29 @@ public class PlayerController : MonoBehaviour
                 }
             }
         } 
-        
+
+        if (isTouch == true && isGround == false & moveInput != 0){
+            wallSlide = true;
+        } else {
+            wallSlide = false;
+        }
+        if(wallSlide){
+            rb2d.velocity = new Vector2(rb2d.velocity.x ,Mathf.Clamp(rb2d.velocity.y , -wallSlidingSpeed, float.MaxValue));
+        }
+        if(Input.GetKeyDown(KeyCode.Space) && wallSlide == true){
+            wallJumping = true;
+            Invoke("SetJump",wallJumpTime);
+        }
+        if(wallJumping == true){
+            rb2d.velocity = new Vector2(x_wallJump * -moveInput, y_wallJump);
+        }
+
     }
 
     void FixedUpdate()
     {
         isGround = Physics2D.OverlapCircle(groundCheck.position, checkRadius, whatIsGround);
+        isTouch  = Physics2D.OverlapCircle(frontCheck.position, checkRadius, whatIsWall);
         
         if (facingRight == false && moveInput > 0){
             Flip();
@@ -100,5 +119,9 @@ public class PlayerController : MonoBehaviour
         Vector3 Skalar = transform.localScale;
         Skalar.x *= -1;
         transform.localScale = Skalar;
+    }
+
+    void SetJump(){
+        wallJumping = false;
     }
 }
