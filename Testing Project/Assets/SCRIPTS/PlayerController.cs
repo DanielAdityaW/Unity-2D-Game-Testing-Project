@@ -10,7 +10,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D rb2d;
 
     private bool facingRight = true;
-    private bool isGround, isTouch;
+    private bool isGround, isgrnd, isTouch;
     private bool wallSlide,wallJumping;
     public float  wallSlidingSpeed,x_wallJump,y_wallJump,wallJumpTime;
     private bool isJump;
@@ -35,7 +35,10 @@ public class PlayerController : MonoBehaviour
         moveInput = Input.GetAxisRaw("Horizontal");
         rb2d.velocity = new Vector2 (moveInput * kecepatan, rb2d.velocity.y);
 
+        //doublejump
         if(isGround == true){
+            lompat = nilaiLompat;
+        } else if(isgrnd == true){
             lompat = nilaiLompat;
         }
 
@@ -46,9 +49,12 @@ public class PlayerController : MonoBehaviour
             penghitungWaktuLompat = waktuLompatan;
         }else if (Input.GetKeyDown(KeyCode.Space) && lompat == 0 && isGround == true){
             rb2d.velocity = Vector2.up * gayaLompat;
+        } else if(Input.GetKeyDown(KeyCode.Space) && lompat == 0 && isgrnd == true){
+            rb2d.velocity = Vector2.up * gayaLompat;
         }
 
-        if(Input.GetKey(KeyCode.Space) && isJump == true){
+        //Holdjump 
+        if(Input.GetKey(KeyCode.Space) && isJump == true ){
             if(penghitungWaktuLompat > 0){
                 rb2d.velocity = Vector2.up * gayaLompat;
                 penghitungWaktuLompat -= Time.deltaTime;
@@ -59,6 +65,7 @@ public class PlayerController : MonoBehaviour
             isJump = false;
         }
 
+        //DASHING
         if (arahDorong == 0){
             if(Input.GetKeyDown(KeyCode.F)){
                 if (moveInput > 0){
@@ -84,6 +91,8 @@ public class PlayerController : MonoBehaviour
             }
         } 
 
+
+        //walljump
         if (isTouch == true && isGround == false & moveInput != 0){
             wallSlide = true;
         } else {
@@ -106,7 +115,8 @@ public class PlayerController : MonoBehaviour
     {
         isGround = Physics2D.OverlapCircle(groundCheck.position, checkRadius, whatIsGround);
         isTouch  = Physics2D.OverlapCircle(frontCheck.position, checkRadius, whatIsWall);
-        
+        isgrnd = Physics2D.OverlapCircle(groundCheck.position, checkRadius, whatIsWall);
+
         if (facingRight == false && moveInput > 0){
             Flip();
         } else if (facingRight == true && moveInput < 0){
